@@ -1127,11 +1127,11 @@ async function install() {
 }
 
 async function run() {
-    let ccachePath = await io.which("ccache", false);
-    if (ccachePath != null) {
+    try {
+        const ccachePath = await io.which("ccache", true);
         core.info("ccache found in path " + ccachePath);
     }
-    else {
+    catch(e) {
         await install();
     }
 }
