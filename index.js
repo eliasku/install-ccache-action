@@ -31,13 +31,19 @@ function installWindows() {
 
                 const zip = new AdmZip(buffer);
                 const binaryName = "ccache.exe";
+                let entryPath = binaryName;
+                for(const ent of zip.getEntries()) {
+                    if(ent.name === binaryName) {
+                        entryPath = ent.entryName;
+                    }
+                }
 
                 const fullDestDir = path.resolve(process.cwd(), destDir);
                 if (!fs.existsSync(fullDestDir)) {
                     fs.mkdirSync(fullDestDir, {recursive: true});
                 }
 
-                zip.extractEntryTo(binaryName, fullDestDir, false, true);
+                zip.extractEntryTo(entryPath, fullDestDir, false, true);
 
                 const fullFileDir = path.join(fullDestDir, binaryName);
                 if (!fs.existsSync(fullFileDir)) {
