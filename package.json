@@ -1,0 +1,22 @@
+{
+  "name": "install-ccache-action",
+  "version": "1.0.0",
+  "description": "Install ccache into path",
+  "main": "dist/index.js",
+  "author": "Elias Ku",
+  "license": "ISC",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "ncc build index.js -o dist",
+    "dev": "npm run build && ncc run index.js"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
+    "@zeit/ncc": "^0.22.3",
+    "adm-zip": "^0.4.13",
+    "follow-redirects": "^1.9.0"
+  },
+  "dependencies": {
+  }
+}

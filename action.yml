@@ -1,0 +1,9 @@
+name: 'Install ccache'
+description: 'Installs ccache'
+branding:
+  icon: 'terminal'
+  color: 'white'
+inputs:
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
