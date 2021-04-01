@@ -101,7 +101,7 @@ async function install() {
 
 async function run() {
     let ccachePath = await io.which("ccache", false);
-    if (ccachePath != null) {
+    if (!!ccachePath) {
         core.info("ccache found in path " + ccachePath);
     }
     else {
