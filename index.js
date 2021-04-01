@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const io = require('@actions/io');
 const {spawnSync} = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -62,7 +63,12 @@ function installWindows() {
                     reject(result.error);
                 }
 
-                const installedVersion = result.stdout.trim();
+                const versionOutput = result.stdout.trim();
+                let installedVersion = "";
+                const r = versionOutput.match(/version\s+([.\d]+)/);
+                if(r != null && r.length > 1) {
+                    installedVersion = r[1];
+                }
 
                 core.info(`$ ${binaryName} --version`);
                 core.info(installedVersion);
@@ -93,4 +99,14 @@ async function install() {
     }
 }
 
-install().then();
+async function run() {
+    let ccachePath = await io.which("ccache", false);
+    if (ccachePath != null) {
+        core.info("ccache found in path " + ccachePath);
+    }
+    else {
+        await install();
+    }
+}
+
+run().then();
